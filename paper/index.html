@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Content Refresh Prioritization — Validation-Aware Research</title>
+<style>
+:root{
+  --bg:#07111f; --panel:#0d1b2e; --panel2:#10243b; --text:#e9f2ff;
+  --muted:#9fb2c9; --accent:#63b3ff; --accent2:#7ee7c5; --line:#203753;
+  --warn:#ffd166; --danger:#ff8b8b;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#07111f,#081522 55%,#07111f);
+color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.65}
+a{color:var(--accent)}
+.container{width:min(1100px,92%);margin:auto}
+nav{position:sticky;top:0;z-index:10;background:rgba(7,17,31,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.navin{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:14px 0}
+.navlinks{display:flex;gap:16px;flex-wrap:wrap;font-size:.9rem}
+.hero{padding:92px 0 64px;border-bottom:1px solid var(--line)}
+.kicker{display:inline-block;padding:6px 11px;border:1px solid #2d5579;border-radius:999px;color:var(--accent2);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
+h1{font-size:clamp(2.3rem,6vw,5rem);line-height:1.02;letter-spacing:-.04em;margin:22px 0}
+h2{font-size:clamp(1.7rem,3vw,2.4rem);line-height:1.15;margin-top:0}
+h3{color:#d8e9ff;margin-bottom:8px}
+.lede{font-size:1.18rem;color:#c5d4e6;max-width:850px}
+.meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.badge{padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:rgba(16,36,59,.6);color:#c6d8ec}
+section{padding:70px 0;border-bottom:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:linear-gradient(145deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:16px;padding:22px}
+.stat{font-size:2rem;font-weight:800;color:var(--accent)}
+.small{font-size:.9rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:20px 0;background:var(--panel);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:13px;border-bottom:1px solid var(--line)}
+th{color:#cfe4ff;background:#10243b}
+.note{border-left:3px solid var(--accent);padding:14px 18px;background:#0c1b2c;color:#c7d7e9;border-radius:0 10px 10px 0}
+.warn{border-left-color:var(--warn)}
+.danger{border-left-color:var(--danger)}
+.barwrap{display:grid;gap:14px;margin:20px 0}
+.barrow{display:grid;grid-template-columns:190px 1fr 80px;gap:12px;align-items:center}
+.bar{height:22px;background:#1a2c43;border-radius:999px;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,var(--accent),#8ad7ff);border-radius:999px}
+.toc{display:flex;gap:10px;flex-wrap:wrap}
+.toc a{padding:8px 12px;border:1px solid var(--line);border-radius:9px;text-decoration:none}
+code{background:#102238;padding:2px 6px;border-radius:5px;color:#bde0ff}
+pre{background:#06101c;border:1px solid var(--line);padding:18px;border-radius:12px;overflow:auto}
+footer{padding:45px 0;color:var(--muted)}
+@media(max-width:760px){
+  .grid,.cards{grid-template-columns:1fr}
+  .barrow{grid-template-columns:1fr}
+  .navin{align-items:flex-start;flex-direction:column}
+  .hero{padding-top:60px}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="container navin">
+    <strong>Applied Search Intelligence</strong>
+    <div class="navlinks">
+      <a href="#abstract">Abstract</a><a href="#data">Data</a><a href="#method">Method</a>
+      <a href="#results">Results</a><a href="#recommendations">Recommendations</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+<div class="container">
+  <span class="kicker">Capstone Research Artifact · ML-11</span>
+  <h1>Content Refresh Prioritization:<br>Validation-Aware Signal &amp; Action Analysis</h1>
+  <p class="lede">
+    A public-safe analysis of content-level signals for prioritizing pages for human review.
+    The work combines a transparent heuristic, signal analysis, a Random Forest validation experiment,
+    leakage checks, and a ranked action playbook.
+  </p>
+  <div class="meta">
+    <span class="badge">30,000-row anonymized working extract</span>
+    <span class="badge">11 model features</span>
+    <span class="badge">Client-grouped validation</span>
+    <span class="badge">Decision-support only</span>
+  </div>
+</div>
+</header>
+
+<main class="container">
+<section id="abstract">
+<h2>Abstract</h2>
+<p>
+This study asks whether observable content-level signals can provide useful directional evidence for prioritizing content for human review.
+The analysis uses the 30,000-row anonymized starter extract supplied for the internship, while the broader release is documented separately as a much larger warehouse snapshot.
+A transparent Week-4 heuristic was followed by signal analysis and a Random Forest regression experiment using historical content and performance signals to examine engagement rate.
+The random split produced MAE 3.064889 and R² 0.117171, while the client-grouped split produced MAE 3.333219 and R² -0.050984, showing weaker measured performance when evaluating unseen client groups.
+The resulting queue is therefore positioned as decision-support for review prioritization, not as proof of causal impact or reliable generalization to unseen clients.
+</p>
+<div class="note">
+<strong>Headline finding:</strong> the more conservative client-grouped validation weakened the observed performance substantially.
+That result is itself useful: it limits how strongly the ranking should be interpreted.
+</div>
+</section>
+
+<section id="problem">
+<h2>1. Introduction / Problem Statement</h2>
+<p>
+Content teams have more pages to review than they can manually inspect with equal attention.
+The practical question is not "what will Google's algorithm do?" but rather:
+<strong>which content items should a human review first, and what observable signal explains that priority?</strong>
+</p>
+<p>
+The unit of analysis is a content item. The output is a ranked review queue with a score, reason code, and suggested action.
+A wrong prioritization can waste editorial time or lead a reviewer to spend effort on a page that does not need intervention.
+For that reason, the system is intentionally framed as a triage aid: a human reviews the evidence before taking action.
+</p>
+</section>
+
+<section id="data">
+<h2>2. Data</h2>
+<p>
+The repository contains a small anonymized starter dataset with <strong>30,000 content records and 44 columns</strong>.
+The analysis used content-level measurements such as age, update recency, impressions, clicks, sessions, CTR, average position,
+AI traffic percentage, word count, engagement rate, scroll rate, and trend percentage.
+</p>
+
+<div class="cards">
+  <div class="card"><div class="stat">30,000</div><div class="small">working content records</div></div>
+  <div class="card"><div class="stat">44</div><div class="small">columns in the starter extract</div></div>
+  <div class="card"><div class="stat">11</div><div class="small">final model features</div></div>
+</div>
+
+<h3>Broader release context</h3>
+<p>
+The internship documentation describes a fixed warehouse release, build
+<code>flyrank_pseudonymized_warehouse_release_v20260703</code>, exported July 3, 2026.
+Its daily performance table contains 78,835,655 rows and runs through June 30, 2026 after a deliberate three-day freshness cutoff.
+The paper does <strong>not</strong> claim that the 30,000-row experiment itself was run over all 78.8 million daily rows.
+The 30,000-row extract is the actual working dataset used for the results reported here.
+</p>
+
+<table>
+<tr><th>Data item</th><th>Documented detail</th></tr>
+<tr><td>Working extract</td><td>30,000 rows × 44 columns</td></tr>
+<tr><td>Warehouse daily fact table</td><td>78,835,655 rows</td></tr>
+<tr><td>Daily fact window</td><td>2025-01-27 through 2026-06-30</td></tr>
+<tr><td>Content creation window in release</td><td>2024-10-16 through 2026-07-06</td></tr>
+<tr><td>Public-safety treatment</td><td>Anonymized/pseudonymized; no client names, raw URLs, raw queries, or titles exposed</td></tr>
+</table>
+
+<div class="note warn">
+<strong>Exclusions:</strong> client-identifying information, raw private queries, URLs, titles, and other sensitive identifiers are not used in the public paper.
+Pseudonymous client IDs are used only to construct the grouped validation split, not as model features.
+</div>
+</section>
+
+<section id="method">
+<h2>3. Methodology</h2>
+<h3>Research design</h3>
+<p>
+The initial Week-5 work was a signal/correlation analysis rather than a supervised predictive model.
+To make the validation question testable, Week 6 introduced a simple
+<strong>Random Forest Regressor</strong> to predict the measured engagement rate from the Week-5 signal features.
+The model used 100 trees with <code>random_state=42</code>.
+</p>
+
+<h3>Final feature set</h3>
+<p>
+The model used the following 11 features:
+</p>
+<div class="toc">
+  <a>content_age_days</a><a>days_since_last_update</a><a>impressions_90d</a>
+  <a>clicks_90d</a><a>sessions_90d</a><a>ai_traffic_pct</a><a>word_count</a>
+  <a>ctr</a><a>avg_position</a><a>scroll_rate</a><a>trend_pct</a>
+</div>
+
+<h3>Target and baseline</h3>
+<p>
+The target was <code>engagement_rate</code>. The Week-4 heuristic baseline was a transparent prioritization score:
+40% normalized content age, 30% inverse CTR, and 30% inverse engagement rate.
+Its measured mean baseline score was <strong>0.772544</strong>.
+Because this score is on a different scale from regression MAE/R², it is reported as a prioritization reference rather than treated as a directly comparable predictive metric.
+</p>
+
+<h3>Validation design</h3>
+<p>
+Two validation designs were compared using the same Random Forest setup:
+a standard 80/20 random train/test split and an 80/20 client-grouped split.
+The grouped split keeps a client's content on one side of the evaluation boundary, making it a more conservative test of performance on unseen clients.
+</p>
+
+<h3>Leakage audit</h3>
+<p>
+The target <code>engagement_rate</code> was excluded from the feature set.
+Week-4 derived fields — <code>baseline_score</code>, <code>reason_code</code>, and <code>action</code> — were also excluded to avoid circular information.
+A remaining limitation is that some historical traffic features may be close to the engagement measurement period; a stricter time-aware design would be needed to fully establish temporal leakage control.
+</p>
+</section>
+
+<section id="results">
+<h2>4. Results</h2>
+<div class="grid">
+  <div class="card"><div class="stat">3.064889</div><div class="small">MAE · random split</div></div>
+  <div class="card"><div class="stat">3.333219</div><div class="small">MAE · client-grouped split</div></div>
+  <div class="card"><div class="stat">0.117171</div><div class="small">R² · random split</div></div>
+  <div class="card"><div class="stat">−0.050984</div><div class="small">R² · client-grouped split</div></div>
+</div>
+
+<table>
+<tr><th>Validation design</th><th>MAE</th><th>R²</th></tr>
+<tr><td>Random split (before)</td><td>3.064889</td><td>0.117171</td></tr>
+<tr><td>Client-grouped split (after)</td><td>3.333219</td><td>-0.050984</td></tr>
+</table>
+
+<h3>MAE comparison</h3>
+<div class="barwrap">
+  <div class="barrow"><span>Random split</span><div class="bar"><div class="fill" style="width:91.95%"></div></div><strong>3.0649</strong></div>
+  <div class="barrow"><span>Client-grouped</span><div class="bar"><div class="fill" style="width:100%"></div></div><strong>3.3332</strong></div>
+</div>
+
+<p>
+The client-grouped MAE is about 8.8% higher than the random-split MAE, while R² moves from positive to negative.
+This is a measured validation difference, not evidence that the underlying content signals are useless.
+It does mean the random-split result should not be presented as reliable performance on unseen clients.
+</p>
+
+<h3>Signal relationships</h3>
+<table>
+<tr><th>Signal</th><th>Correlation with engagement rate</th></tr>
+<tr><td>scroll_rate</td><td>0.162611</td></tr>
+<tr><td>ctr</td><td>0.096903</td></tr>
+<tr><td>word_count</td><td>-0.063045</td></tr>
+<tr><td>content_age_days</td><td>0.039776</td></tr>
+<tr><td>ai_traffic_pct</td><td>0.031504</td></tr>
+<tr><td>clicks_90d</td><td>0.030527</td></tr>
+<tr><td>impressions_90d</td><td>0.024318</td></tr>
+<tr><td>avg_position</td><td>-0.017926</td></tr>
+<tr><td>days_since_last_update</td><td>-0.013661</td></tr>
+<tr><td>trend_pct</td><td>0.008412</td></tr>
+<tr><td>sessions_90d</td><td>0.005895</td></tr>
+</table>
+
+<div class="note">
+The largest observed correlation in this analysis was between scroll rate and engagement rate (0.162611).
+These are associations in the working data; they should not be interpreted as causal effects.
+</div>
+</section>
+
+<section id="limitations">
+<h2>5. Limitations &amp; Honest Framing</h2>
+<ul>
+<li>The main experiment uses a 30,000-row anonymized extract rather than the entire warehouse release.</li>
+<li>The observed relationships are directional and do not establish causality.</li>
+<li>The client-grouped validation result is weak: R² = -0.050984.</li>
+<li>The baseline score and model metrics are not directly comparable because they measure different things on different scales.</li>
+<li>The analysis does not prove that refreshing a page, changing a title, or making an SEO change will improve performance.</li>
+<li>A stricter time-aware validation would strengthen the leakage audit.</li>
+<li>The ranked queue is a review aid, not an autonomous content-management system.</li>
+</ul>
+<div class="note danger">
+<strong>Safe claim:</strong> the analysis measured directional relationships and produced a decision-support ranking.
+It does not prove reliable generalization, causal impact, or guaranteed improvement from recommended actions.
+</div>
+</section>
+
+<section id="recommendations">
+<h2>6. Ranked Recommendations</h2>
+<p>
+The action playbook turns measured signals into a practical human-review queue.
+The ranking answers <em>what should be inspected first</em>, not <em>what must automatically be changed</em>.
+</p>
+
+<div class="cards">
+<div class="card">
+  <h3>01 · Low CTR</h3>
+  <div class="stat">22,931</div>
+  <p>Review pages flagged <code>LOW_CTR</code>. Inspect search presentation, intent alignment, title/description quality, and context before changing anything.</p>
+</div>
+<div class="card">
+  <h3>02 · Stale content</h3>
+  <div class="stat">6,360</div>
+  <p>Review pages flagged <code>STALE_CONTENT</code> for factual freshness, relevance, and update opportunities.</p>
+</div>
+<div class="card">
+  <h3>03 · Low engagement</h3>
+  <div class="stat">709</div>
+  <p>Review pages flagged <code>LOW_ENGAGEMENT</code> for relevance, structure, clarity, and user experience.</p>
+</div>
+</div>
+
+<h3>Human-review rule</h3>
+<p>
+Every ranked item requires human review before action. Reviewers should check the underlying signals and page context and record the final decision.
+</p>
+
+<h3>No-go automation list</h3>
+<ul>
+<li>Automatic content publishing</li>
+<li>Automatic page deletion</li>
+<li>Automatic SEO changes</li>
+<li>Irreversible changes without human approval</li>
+</ul>
+
+<h3>Monitoring / retrain triggers</h3>
+<ul>
+<li>Material changes in the distribution of input signals.</li>
+<li>Worsening validation error on a fresh, appropriately grouped or time-aware evaluation.</li>
+<li>Changes in content lifecycle or measurement definitions that make historical features less comparable.</li>
+<li>Repeated reviewer disagreement with the reason codes or ranked priorities.</li>
+</ul>
+</section>
+
+<section id="repro">
+<h2>7. Reproducibility</h2>
+<p>
+The analysis notebooks are committed in the public repository. The capstone notebook mirrors the paper structure, while the earlier notebooks contain the signal analysis, validation audit, and action playbook.
+</p>
+<ul>
+<li><a href="https://github.com/VipS-2004/flyrank1/blob/main/work/notebooks/w05_model.ipynb">Week 5 — signal/model notebook</a></li>
+<li><a href="https://github.com/VipS-2004/flyrank1/blob/main/work/notebooks/w06_validation_audit.ipynb">Week 6 — validation audit</a></li>
+<li><a href="https://github.com/VipS-2004/flyrank1/blob/main/work/notebooks/w07_action_playbook.ipynb">Week 7 — action playbook</a></li>
+<li><a href="https://github.com/VipS-2004/flyrank1/blob/main/work/notebooks/capstone.ipynb">Week 8 — capstone notebook</a></li>
+<li><a href="https://github.com/VipS-2004/flyrank1">Full repository</a></li>
+</ul>
+
+<pre>Random Forest: n_estimators=100, random_state=42
+Random split: test_size=0.20, random_state=42
+Client-grouped split: 20% of unique clients held out, random_state=42
+Target: engagement_rate
+Features: 11 content/performance signals
+</pre>
+
+<p class="small">
+The working dataset path used in Colab was
+<code>data/raw/content_refresh_anonymized.csv</code>.
+The public repository does not expose private client information.
+</p>
+</section>
+
+<section id="credit">
+<h2>8. Acknowledgments &amp; Data Credit</h2>
+<p>
+<strong>Built on the FlyRank ML Internship dataset.</strong>
+The internship release and starter data were provided for the Applied Search Intelligence ML internship.
+</p>
+<p>
+<a href="https://flyrank.ai" target="_blank" rel="noopener">FlyRank</a>
+</p>
+</section>
+</main>
+
+<footer>
+<div class="container">
+  <p><strong>Research framing:</strong> observed · measured · directional · decision-support.</p>
+  <p>Prepared as a public-safe capstone artifact. No client names, raw URLs, private queries, or identifying content are included.</p>
+</div>
+</footer>
+</body>
+</html>
