@@ -89,11 +89,11 @@ footer{padding:45px 0;color:var(--muted)}
 <section id="abstract">
 <h2>Abstract</h2>
 <p>
-This study asks whether observable content-level signals can provide useful directional evidence for prioritizing content for human review.
-The analysis uses the 30,000-row anonymized starter extract supplied for the internship, while the broader release is documented separately as a much larger warehouse snapshot.
-A transparent Week-4 heuristic was followed by signal analysis and a Random Forest regression experiment using historical content and performance signals to examine engagement rate.
-The random split produced MAE 3.064889 and R² 0.117171, while the client-grouped split produced MAE 3.333219 and R² -0.050984, showing weaker measured performance when evaluating unseen client groups.
-The resulting queue is therefore positioned as decision-support for review prioritization, not as proof of causal impact or reliable generalization to unseen clients.
+FlyRank's content teams need practical ways to identify content that may benefit from review or refresh using measurable performance signals.
+This study examines whether signals such as content age, traffic, clicks, CTR, engagement, and trend information can support content-performance analysis and action prioritization.
+The analysis compares model performance under a random split and a more conservative client-grouped split, while also checking the final feature set for leakage.
+The random split produced an MAE of 3.064889 and R² of 0.117171, while the client-grouped split produced an MAE of 3.333219 and R² of -0.050984. 
+These results suggest that the current analysis is best treated as decision-support evidence for human review rather than proof of reliable generalization to new clients.
 </p>
 <div class="note">
 <strong>Headline finding:</strong> the more conservative client-grouped validation weakened the observed performance substantially.
@@ -104,14 +104,11 @@ That result is itself useful: it limits how strongly the ranking should be inter
 <section id="problem">
 <h2>1. Introduction / Problem Statement</h2>
 <p>
-Content teams have more pages to review than they can manually inspect with equal attention.
-The practical question is not "what will Google's algorithm do?" but rather:
-<strong>which content items should a human review first, and what observable signal explains that priority?</strong>
+FlyRank's content teams need practical ways to identify which content may deserve attention or a refresh. The problem is not simply predicting a performance metric; it is using available content and performance signals to help decide which pages a human reviewer should inspect first.
 </p>
+
 <p>
-The unit of analysis is a content item. The output is a ranked review queue with a score, reason code, and suggested action.
-A wrong prioritization can waste editorial time or lead a reviewer to spend effort on a page that does not need intervention.
-For that reason, the system is intentionally framed as a triage aid: a human reviews the evidence before taking action.
+This analysis examines signals such as content freshness, traffic, CTR, engagement, and trends, and turns the observed patterns into a ranked review queue with reason codes and suggested actions. Because the results can change depending on how the data is split, the analysis also compares random and client-grouped validation and checks the model features for leakage. The resulting queue is therefore intended as decision-support for human review, not as an automated decision system or proof that a particular content change will improve performance.
 </p>
 </section>
 
